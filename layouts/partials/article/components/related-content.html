@@ -1,4 +1,5 @@
-{{ $related := (where (.Site.RegularPages.Related .) "Params.hidden" "!=" true) | first 5 }}
+<!-- 修改相关文章数目，修改 first 的数值即可，0 代表关闭相关文章 -->
+{{ $related := (where (.Site.RegularPages.Related .) "Params.hidden" "!=" true) | first 5 }} 
 {{ with $related }}
 <aside class="related-content--wrapper">
     <h2 class="section-title">{{ T "article.relatedContent" }}</h2>

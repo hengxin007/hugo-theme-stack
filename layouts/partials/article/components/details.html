@@ -45,6 +45,15 @@
                 </time>
             </div>
         {{ end }}
+        <!-- 加入字数统计 -->
+        {{ if .Site.Params.article.readingTime }}
+            <div>
+                {{ partial "helper/icon" "pencil" }}
+                <time class="article-words">
+                    共 {{ .WordCount }} 字
+                </time>
+            </div>
+        {{ end }}
     </footer>
     {{ end }}
 

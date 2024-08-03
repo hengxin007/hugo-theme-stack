@@ -1,0 +1,4 @@
+{{ $topImg := resources.Get ("icons/back-to-top.svg") }}
+<a id="back-to-top" href="#">
+    {{$topImg.Content | safeHTML}}
+</a>
