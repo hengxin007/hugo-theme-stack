@@ -38,12 +38,12 @@
         {{ end }}
         <!-- 新添加的最后修改时间 -->
         {{- if ne .Lastmod .Date -}}
-        <div>
-            {{ partial "helper/icon" "edit" }}
-            <time class="article-lastmod">
-                {{- .Lastmod.Format (or .Site.Params.dateFormat.published "Jan 02, 2006") -}}
-            </time>
-        </div>
+            <div>
+                {{ partial "helper/icon" "edit" }}
+                <time class="article-lastmod">
+                    {{- .Lastmod.Format (or .Site.Params.dateFormat.published "Jan 02, 2006") -}}
+                </time>
+            </div>
         {{ end }}
         <!-- 自带的阅读时间 -->
         {{ if $showReadingTime }}
@@ -54,11 +54,11 @@
                 </time>
             </div>
         {{ end }}
-        <!-- 添加文章参观人数 -->
-        <section>
+        <!-- 添加文章参观人数，默认为0 -->
+        <div>
             {{ partial "helper/icon" "eye" }}
-            <span id="busuanzi_value_page_pv">Loading</span>
-        </section>
+            <time  id="busuanzi_value_page_pv">0</time>
+        </div>
     </footer>
     {{ end }}
 
