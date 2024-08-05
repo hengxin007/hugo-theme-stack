@@ -7,7 +7,39 @@
         {{ end }}
         {{ now.Format "2006" }} {{ default .Site.Title .Site.Copyright }}
     </section>
-    
+    <!-- 添加本站已运行XX时间 -->
+    <script>
+        // 获取站点启动时间
+        const launchDate = new Date("{{ .Site.Params.footer.launchDate }}");
+
+        function updateRunTime() {
+            const now = new Date();
+            const diff = now - launchDate;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            const runTimeText = "{{ T "footer.runTime" }}";
+            if (runTimeText) {
+                const runTimeElement = document.getElementById('run-time'); 
+                if (runTimeElement) { // Add this check
+                    runTimeElement.innerText = runTimeText
+                        .replace('%d', days)
+                        .replace('%d', hours)
+                        .replace('%d', minutes)
+                        .replace('%d', seconds);
+                }
+            }
+        }
+
+        // 每秒更新一次计时器
+        setInterval(updateRunTime, 1000);
+
+        // 初始调用以防止加载延迟
+        updateRunTime();
+    </script>
+
     <section class="powerby">
         {{ with .Site.Params.footer.customText }}
             {{ . | safeHTML }} <br/>
@@ -18,9 +50,16 @@
         {{- $DesignedBy := `<a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>` -}}
         
         <!-- 统计数量 -->
-        总访客数：<span id='busuanzi_value_site_uv'>Loading</span><br/>
+        总访客数：<span id='busuanzi_value_site_uv' style="margin-right: 10px;">Loading</span>
         总访问量：<span id='busuanzi_value_site_pv'>Loading</span><br/>
-        {{ T "footer.builtWith" (dict "Generator" $Generator) | safeHTML }} <br />
-        {{ T "footer.designedBy" (dict "Theme" $Theme "DesignedBy" $DesignedBy) | safeHTML }}
+        <!-- 显示本站已运行.. -->
+        <div>
+            <span id="run-time">{{T "footer.loading"}}</span>
+        </div>
+        <!-- 版权信息 -->
+        <!-- {{ T "footer.builtWith" (dict "Generator" $Generator) | safeHTML }} <br />
+        {{ T "footer.designedBy" (dict "Theme" $Theme "DesignedBy" $DesignedBy) | safeHTML }} -->
+        <!-- 修改后版权信息 -->
+        Built with {{ $Generator | safeHTML }} & {{$Theme | safeHTML}} design by {{ $DesignedBy | safeHTML}}
     </section>
 </footer>
